@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: dwh_usgs_events
+    description: "One row per earthquake, latest non-tombstone version."
+    columns:
+      - name: event_id
+        description: "USGS event id."
+        tests:
+          - unique
+          - not_null

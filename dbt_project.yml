@@ -1,0 +1,13 @@
+name: 'disaster'
+version: '1.0.0'
+profile: 'disaster'
+
+model-paths: ["models"]
+target-path: "target"
+
+models:
+  disaster:
+    +materialized: table
+
+vars:
+  raw_path: 'data/raw'
