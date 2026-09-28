@@ -87,3 +87,20 @@ Next: decide how to represent groups 1-3 in the model. Then dbt.
 Questions: why does one network emit 0,0 records in bursts?
   should the dwh hold unplottable rows at all, or a separate table?
 
+
+
+
+## 2026-09-24
+Did: Migrated the pipeline to dbt. Two models (stg, dwh), ref() for
+  dependency order, materialized as tables. Verified faithful — 142,200
+  rows, 305 unplottable, same as the hand-built version.
+Broke: profiles.yml needed the new profile at column zero, alongside the
+  old Snowflake one. Then dbt-duckdb crashed on import — newer adapter
+  against dbt-core 1.8.6 from an old project. Upgrading core fixed it.
+  Both projects now share one dbt version; virtualenvs would avoid that.
+Found: a dbt model is a SELECT, not a CREATE. Materialization is config.
+  ref() builds the dependency graph rather than me ordering the runs.
+Next: unique/not_null tests on event_id. Then snapshots for the deletion
+  problem. Still open: how to model the 305 unplottable rows.
+Questions: what does dbt do that I couldn't do with plain SQL files and a
+  runner script? when would a model be a view instead of a table?
